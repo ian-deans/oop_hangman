@@ -22,6 +22,9 @@
         // Set up start button
         this.startButton = this.dom.querySelector('.start-game')
         this.startButton.addEventListener('click', this.setup)
+        
+        // Add event listener for key strokes while game is focused on
+        this.dom.addEventListener('keypress', this.handleKeyPress)
     }
 
 
@@ -125,9 +128,7 @@
                     this.setup() // Start the game if enter is pressed
                 }
                 return
-
-            }
-            
+            }            
             
             if (HangMan.isLetter(event.key)) { // Make sure the user pressed a letter key
                 var letter = event.key.toLowerCase() // Just incase capslock is on...
@@ -200,11 +201,10 @@
         },
     }
     
-    // Instantiate an instance of the class HangMan
-    var game = new HangMan(document.getElementById('game'))
-    
+    // Instantiate an instance of the class HangMan for each game found on the document
+    // ( this handles mutliple games on one page)
+    document.querySelectorAll('.game').forEach(function(game) {
+        var hangman = new HangMan(game)
+    })
 
-    // Add event listeners for key presses and clicking start button
-    document.addEventListener('keypress', game.handleKeyPress)
-    // startButton.addEventListener('click', game.setup)
 }());
