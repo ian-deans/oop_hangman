@@ -9,7 +9,7 @@
         this.wins = 0           // variable for tracking wins
         this.losses = 0         // variable for tracking losses
         this.state = {}         // variable for storing game-state
-
+        
         // Binding 'this' pointer to the instance
         this.endGame = this.endGame.bind(this)
         this.handleKeyPress = this.handleKeyPress.bind(this)
@@ -18,6 +18,10 @@
         this.setup = this.setup.bind(this)
         this.updateCurrentWord = this.updateCurrentWord.bind(this)
         this.updateDisplay = this.updateDisplay.bind(this)
+        
+        // Set up start button
+        this.startButton = this.dom.querySelector('.start-game')
+        this.startButton.addEventListener('click', this.setup)
     }
 
 
@@ -94,7 +98,7 @@
             }
 
             this.updateScore()
-            startButton.classList.remove('hidden')
+            this.startButton.classList.remove('hidden')
         },
 
         // returns true is win or loss conditions are met
@@ -163,7 +167,7 @@
 
         // handles all logic for setting up and starting a new game
         setup: function() {
-            startButton.classList.add('hidden')     // hide start button
+            this.startButton.classList.add('hidden')     // hide start button
 
             this.state = HangMan.newState()         // get fresh state object
             this.divs = HangMan.elements(this.dom)  // get html element references
@@ -202,5 +206,5 @@
 
     // Add event listeners for key presses and clicking start button
     document.addEventListener('keypress', game.handleKeyPress)
-    startButton.addEventListener('click', game.setup)
+    // startButton.addEventListener('click', game.setup)
 }());
