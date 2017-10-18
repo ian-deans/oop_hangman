@@ -9,7 +9,7 @@
         this.wins = 0           // variable for tracking wins
         this.losses = 0         // variable for tracking losses
         this.state = {}         // variable for storing game-state
-
+        
         // Binding 'this' pointer to the instance
         this.endGame = this.endGame.bind(this)
         this.handleKeyPress = this.handleKeyPress.bind(this)
@@ -18,6 +18,13 @@
         this.setup = this.setup.bind(this)
         this.updateCurrentWord = this.updateCurrentWord.bind(this)
         this.updateDisplay = this.updateDisplay.bind(this)
+        
+        // Set up start button
+        this.startButton = this.dom.querySelector('.start-game')
+        this.startButton.addEventListener('click', this.setup)
+        
+        // Add event listener for key strokes while game is focused on
+        this.dom.addEventListener('keypress', this.handleKeyPress)
     }
 
 
@@ -94,7 +101,7 @@
             }
 
             this.updateScore()
-            startButton.classList.remove('hidden')
+            this.startButton.classList.remove('hidden')
         },
 
         // returns true is win or loss conditions are met
@@ -121,9 +128,7 @@
                     this.setup() // Start the game if enter is pressed
                 }
                 return
-
-            }
-            
+            }            
             
             if (HangMan.isLetter(event.key)) { // Make sure the user pressed a letter key
                 var letter = event.key.toLowerCase() // Just incase capslock is on...
@@ -163,7 +168,7 @@
 
         // handles all logic for setting up and starting a new game
         setup: function() {
-            startButton.classList.add('hidden')     // hide start button
+            this.startButton.classList.add('hidden')     // hide start button
 
             this.state = HangMan.newState()         // get fresh state object
             this.divs = HangMan.elements(this.dom)  // get html element references
@@ -196,11 +201,10 @@
         },
     }
     
-    // Instantiate an instance of the class HangMan
-    var game = new HangMan(document.getElementById('game'))
-    
+    // Instantiate an instance of the class HangMan for each game found on the document
+    // ( this handles mutliple games on one page)
+    document.querySelectorAll('.game').forEach(function(game) {
+        var hangman = new HangMan(game)
+    })
 
-    // Add event listeners for key presses and clicking start button
-    document.addEventListener('keypress', game.handleKeyPress)
-    startButton.addEventListener('click', game.setup)
 }());
