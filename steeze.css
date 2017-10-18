@@ -1,0 +1,27 @@
+
+* {
+    /* border: solid black 1px; */
+}
+
+.game-container {
+    height: 60vh;
+    width: 50vw;
+}
+
+.score-board {
+    border: ridge #bada55 5px;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.current-word {
+    min-height: 10vh;
+    font-size: 44px;
+    letter-spacing: 10px;
+    border-bottom: groove #bada55 3px;
+}
+
+.hidden {
+    display: none;
+}
